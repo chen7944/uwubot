@@ -78,6 +78,12 @@ async def info(ctx):
 async def set_channel(ctx, channel):
     global read_channel
     read_channel = channel[2:len(channel)-1]
+    emb = discord.Embed(
+        title="Channel set :white_check_mark:",
+        color=0xf47fff,
+        description=f"Messages will now be read from {channel}"
+    )
+    await ctx.channel.send(embed=emb)
 
 
 @bot.event

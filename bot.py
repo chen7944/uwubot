@@ -76,13 +76,12 @@ async def info(ctx):
 
 @bot.command(name="set")
 async def set_channel(ctx, channel):
+    global read_channel
     read_channel = channel[2:len(channel)-1]
-    print(read_channel)
 
 
 @bot.event
 async def on_message(message):
-    print(message)
     if not message.author.bot and str(message.channel.id) == read_channel:
         async with aiohttp.ClientSession() as session:
             webhook = Webhook.from_url(webhook_url, adapter=AsyncWebhookAdapter(session))

@@ -10,6 +10,7 @@ read_channel = ""
 @bot.event
 async def on_ready():
     print("Ready")
+    await bot.change_presence(activity=discord.Game(name='?help'))
 
 def uwuify(text):
     length = len(text)
@@ -65,7 +66,29 @@ def uwuify(text):
 
     return output_text
 
-@bot.command(name="info")
+def error_response(error_text):
+    emb = discord.Embed(
+            description=error_text,
+            title='Error :x:',
+            color=0xff4444
+        )
+    emb.set_footer(text='For more help with commands, use ?help.')
+    return emb
+
+@bot.command()
+async def help(ctx):
+    emb = discord.Embed(
+        title="Help",
+        color=0xf47fff,
+        description="The curly braces {} should not be included in the actual command"
+    )
+    emb.add_field(name="?info", value="Info about the bot", inline=False)
+    emb.add_field(name="?set {channel}", value="Sets the channel the bot will read from", inline=False)
+    emb.add_field(name="?config", value="See which channel the bot is reading from", inline=False)
+    emb.set_footer(text="For more information, visit my github https://github.com/chen7944/uwubot")
+    await ctx.channel.send(embed=emb)
+
+@bot.command()
 async def info(ctx):
     emb = discord.Embed(
         title="Info",
@@ -75,8 +98,11 @@ async def info(ctx):
     await ctx.channel.send(embed=emb)
 
 @bot.command(name="set")
-async def set_channel(ctx, channel):
+async def set_channel(ctx, channel=None):
     global read_channel
+    if channel is None:
+        await ctx.channel.send(embed=error_response("Invalid parameters, use ?help for more information"))
+        return
     read_channel = channel[2:len(channel)-1]
     emb = discord.Embed(
         title="Channel set :white_check_mark:",
@@ -85,6 +111,14 @@ async def set_channel(ctx, channel):
     )
     await ctx.channel.send(embed=emb)
 
+@bot.command()
+async def config(ctx):
+    emb = discord.Embed(
+        title="Config",
+        color=0xf47fff,
+        description=f"I am currently reading messages from <#{read_channel}>"
+    )
+    await ctx.channel.send(embed=emb)
 
 @bot.event
 async def on_message(message):

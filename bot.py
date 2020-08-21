@@ -12,7 +12,7 @@ async def on_ready():
     print("Ready")
     await bot.change_presence(activity=discord.Game(name='?help'))
 
-def uwuify(text):
+def uwu(text):
     length = len(text)
     output_text = ''
     for i in range(length):
@@ -54,12 +54,6 @@ def uwuify(text):
                 output_text += "w"
             else:
                 output_text += current_char
-
-        elif current_char == 'OVE':
-            output_text += 'UV'
-
-        elif current_char == 'ove':
-            output_text += 'uv'
 
         else:
             output_text += current_char
@@ -123,9 +117,10 @@ async def config(ctx):
 @bot.event
 async def on_message(message):
     if not message.author.bot and str(message.channel.id) == read_channel:
-        async with aiohttp.ClientSession() as session:
-            webhook = Webhook.from_url(webhook_url, adapter=AsyncWebhookAdapter(session))
-            await webhook.send(uwuify(message.content), username=message.author.name, avatar_url=message.author.avatar_url)
+        #guild = message.guild
+        #channel = await guild.create_text_channel('testing')
+        webhook = await message.channel.create_webhook(name='Foo')
+        await webhook.send(uwu(message.content), username=message.author.name, avatar_url=message.author.avatar_url)
     await bot.process_commands(message)
 
 

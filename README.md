@@ -10,7 +10,7 @@ upon joining server:
 - realize which channel is the general channel so it can create an alternate version of it
 - create new text channel (@.everyone no write perms) called uwubot's generaw (eg)
 - create uwu role to give out to individuals
-- make all messages from uwubot embed to make it stand out (similar to DMOJ Hub > #info > @DMOJ Staff [Bot]) (diff from uwuified messages)
+- make all messages from uwubot embed to make it stand out (diff from uwuified messages)
 - introductory paragraph stating what it does (includes link to github repo, because, why not)
 - dynamically create and delete webhooks
 - custom rules (4 rules, no lib)
